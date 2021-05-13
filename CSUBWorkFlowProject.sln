@@ -1,0 +1,64 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31025.194
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSUBWorkFlowProject.Web", "CSUBWorkFlowProject.Web\CSUBWorkFlowProject.Web.csproj", "{1E141B31-50A1-40A5-B49B-5AB26DE717F8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{54C0A240-4895-4951-8CDB-5C023CC6B4D7} = {54C0A240-4895-4951-8CDB-5C023CC6B4D7}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSUBWorkFlowProject.Tests", "CSUBWorkFlowProject.Tests\CSUBWorkFlowProject.Tests.csproj", "{B5B0264B-BA78-47E1-B222-0541C3BF1359}"
+	ProjectSection(ProjectDependencies) = postProject
+		{39438403-B664-4BF9-9F80-91DABEAD0844} = {39438403-B664-4BF9-9F80-91DABEAD0844}
+		{54C0A240-4895-4951-8CDB-5C023CC6B4D7} = {54C0A240-4895-4951-8CDB-5C023CC6B4D7}
+		{74239B42-32EF-4202-B9A2-1FFF8969A77A} = {74239B42-32EF-4202-B9A2-1FFF8969A77A}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSUBWorkFlowProject.Data", "CSUBWorkFlowProject.Data\CSUBWorkFlowProject.Data.csproj", "{39438403-B664-4BF9-9F80-91DABEAD0844}"
+	ProjectSection(ProjectDependencies) = postProject
+		{54C0A240-4895-4951-8CDB-5C023CC6B4D7} = {54C0A240-4895-4951-8CDB-5C023CC6B4D7}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSUBWorkFlowProject.Server", "CSUBWorkFlowProject.Server\CSUBWorkFlowProject.Server.csproj", "{74239B42-32EF-4202-B9A2-1FFF8969A77A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{39438403-B664-4BF9-9F80-91DABEAD0844} = {39438403-B664-4BF9-9F80-91DABEAD0844}
+		{54C0A240-4895-4951-8CDB-5C023CC6B4D7} = {54C0A240-4895-4951-8CDB-5C023CC6B4D7}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSUBWorkFlowProject.Shared", "CSUBWorkFlowProject.Models\CSUBWorkFlowProject.Shared.csproj", "{54C0A240-4895-4951-8CDB-5C023CC6B4D7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1E141B31-50A1-40A5-B49B-5AB26DE717F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E141B31-50A1-40A5-B49B-5AB26DE717F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E141B31-50A1-40A5-B49B-5AB26DE717F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E141B31-50A1-40A5-B49B-5AB26DE717F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5B0264B-BA78-47E1-B222-0541C3BF1359}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5B0264B-BA78-47E1-B222-0541C3BF1359}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5B0264B-BA78-47E1-B222-0541C3BF1359}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5B0264B-BA78-47E1-B222-0541C3BF1359}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39438403-B664-4BF9-9F80-91DABEAD0844}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39438403-B664-4BF9-9F80-91DABEAD0844}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39438403-B664-4BF9-9F80-91DABEAD0844}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39438403-B664-4BF9-9F80-91DABEAD0844}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74239B42-32EF-4202-B9A2-1FFF8969A77A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74239B42-32EF-4202-B9A2-1FFF8969A77A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74239B42-32EF-4202-B9A2-1FFF8969A77A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74239B42-32EF-4202-B9A2-1FFF8969A77A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54C0A240-4895-4951-8CDB-5C023CC6B4D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54C0A240-4895-4951-8CDB-5C023CC6B4D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54C0A240-4895-4951-8CDB-5C023CC6B4D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54C0A240-4895-4951-8CDB-5C023CC6B4D7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F7B87BBC-AC46-4B46-BED7-75B1EAD6B250}
+	EndGlobalSection
+EndGlobal

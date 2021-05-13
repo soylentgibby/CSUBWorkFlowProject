@@ -1,0 +1,77 @@
+﻿
+@inject IAccountService AccountService
+@inject ISearchService SearchService
+@inject IAlertService AlertService
+@inject IRequestService RequestService
+
+
+
+<section class="user-edit">
+<EditForm Model="@directory" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary></ValidationSummary>
+
+    <div class="form-group row">
+        <label for="Title" class="col-sm-3">Title: </label>
+        <InputText id="Tile" class="form-control col-sm-8" @bind-Value="@directory.t" placeholder="Enter Title"></InputText>
+        <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => directory.t)" />
+    </div>
+
+    <div class="form-group row">
+        <div class="mr-2">
+            <button disabled="@loading" class="btn btn-primary">
+                @if (loading)
+                {
+                    <span class="spinner-border spinner-border-sm mr-1"></span>
+                }
+                Request Change
+            </button>                    
+            <a class="btn btn-outline-primary" @onclick="@Close">Close</a>
+        </div>
+    </div>
+</EditForm>
+</section>
+
+
+@code
+{
+    [Parameter]
+    public Directory directory { get; set; }
+
+    private bool loading;
+
+    [Parameter]
+    public EventCallback<bool> CloseEventCallback
+    {
+        get;
+        set;
+    }
+    public void Show()
+    {
+        StateHasChanged();
+    }
+    public void Close()
+    {
+        StateHasChanged();
+    }
+
+    protected async Task HandleValidSubmit()
+    {
+        try
+        {
+            loading = true;
+            AlertService.Clear();
+            await RequestService.RequestChange(directory, AccountService.user.userid);
+            loading = false;
+            AlertService.Success("Reuqest Submitted");
+            Close();
+
+        }
+        catch (Exception ex)
+        {
+            AlertService.Error(ex.Message);
+            loading = false;
+            StateHasChanged();
+        }
+    }
+}

@@ -1,0 +1,14 @@
+﻿@page "/"
+@attribute [Authorize]
+@inject IAccountService AccountService
+
+<div class="p-4">
+    <div class="container">
+        <h1>Hi @AccountService.user.Username!</h1>
+        <p>You're logged in</p>
+        @if (AccountService.user.isManager)
+        {
+            <p><NavLink href="request/maintenance">Manage Requests</NavLink></p>
+        }
+    </div>
+</div>

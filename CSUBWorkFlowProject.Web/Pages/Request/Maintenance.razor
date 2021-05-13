@@ -1,0 +1,116 @@
+﻿@page "/request/Maintenance"
+
+@attribute [Authorize]
+
+@inject IAccountService AccountService
+@inject ISearchService SearchService
+@inject IAlertService AlertService
+@inject IRequestService RequestService
+@inject ITelerikStringLocalizer Localizer
+
+<h1 class="page-title">Request Maintenance</h1>
+
+@if (AccountService.user.isManager)
+{
+    <TelerikGrid Data=requests
+                 Height="500px" Pageable="true" PageSize=@PageSize>
+        <GridColumns>
+            <GridColumn Field=@nameof(Request.UserId) Editable="false" Title="Requester" />
+            <GridColumn Field=@nameof(Request.RequestField) Editable="false" Title="Field" />
+            <GridColumn Field=@nameof(Request.RequestChange) Editable="false" Title="Change" />
+            <GridColumn Field=@nameof(Request.RequestDate) Editable="false" Title="Date" />
+            <GridCommandColumn>
+                <GridCommandButton Command="Approve" Icon="save" OnClick="ApproveHandler">Approve</GridCommandButton>
+                <GridCommandButton Command="Deny" Icon="cancel" OnClick="DenyHandler">Deny</GridCommandButton>
+            </GridCommandColumn>
+        </GridColumns>
+    </TelerikGrid>
+}
+else
+{
+    <TelerikGrid Data=requests
+                 Height="500px" Pageable="true" PageSize=@PageSize>
+        <GridColumns>
+            <GridColumn Field=@nameof(Request.UserId) Editable="false" Title="Requester" />
+            <GridColumn Field=@nameof(Request.RequestField) Editable="false" Title="Field" />
+            <GridColumn Field=@nameof(Request.RequestChange) Editable="false" Title="Change" />
+            <GridColumn Field=@nameof(Request.RequestDate) Editable="false" Title="Date" />
+            <GridColumn Field=@nameof(Request.isApproved) Editable="false" Title="Approved" />
+            <GridColumn Field=@nameof(Request.isDenied) Editable="false" Title="Denied" />
+            <GridColumn Field=@nameof(Request.ResponseDate) Editable="false" Title="Responded" />
+            <GridColumn Field=@nameof(Request.ManagerUserId) Editable="false" Title="Manager" />
+        </GridColumns>
+    </TelerikGrid>
+}
+
+@code
+{
+    @using System.Collections.Generic;
+    @using Telerik.Blazor.Services;
+    @using Telerik.DataSource.Extensions;
+
+    private bool loading;
+    string Height = "400px";
+    public int Total { get; set; } = 0;
+
+    int PageSize = 15;
+
+    private List<CSUBWorkFlowProject.Shared.Models.Request> requests;
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        await GetGridData();
+    }
+
+    async Task GetGridData()
+    {
+        if (AccountService.user.isManager)
+        {
+            requests = (await RequestService.GetPendingRequests()).ToList();
+        }
+        else
+        {
+            requests = (await RequestService.GetUserRequests(AccountService.user.userid)).ToList();
+        }
+    }
+
+    private async Task ApproveHandler(GridCommandEventArgs args)
+    {
+        var request = args.Item as Request;
+
+        try
+        {
+            AlertService.Clear();
+            RequestService.ApproveRequest(request, AccountService.user.userid);
+            AlertService.Success("Request Approved");
+            await GetGridData();
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            AlertService.Error(ex.Message);
+            StateHasChanged();
+        }
+    }
+    private async Task DenyHandler(GridCommandEventArgs args)
+    {
+        var request = args.Item as Request;
+
+        try
+        {
+            AlertService.Clear();
+            RequestService.DenyRequest(request, AccountService.user.userid);
+            AlertService.Success("Request Denied");
+            await GetGridData();
+            StateHasChanged();
+
+        }
+        catch (Exception ex)
+        {
+            AlertService.Error(ex.Message);
+            StateHasChanged();
+        }
+    }
+
+    }

@@ -1,0 +1,95 @@
+﻿@page "/directory/search"
+
+@attribute [Authorize]
+
+@inject IAccountService AccountService
+@inject ISearchService SearchService
+@inject IAlertService AlertService
+@inject IRequestService RequestService
+
+<h1 class="page-title">Search Directory</h1>
+
+<select class="form-control selectpicker" @bind="@searchtype">
+    <option value="f">First Name</option>
+    <option value="l">Last Name</option>
+    <option value="t">Title</option>
+</select>
+
+<input type="text" @bind-value="@searchvalue" />
+<input type="button" value="Search" @onclick="@SearchDirectory" />
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Title</th>
+            <th>Email</th>
+            <th>Dept.</th>
+            <th>Phone</th>
+            <th>Room</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (users != null)
+        {
+            foreach (var user in users)
+            {
+                <tr>
+                    <td>@user.f</td>
+                    <td>@user.l</td>
+                    <td>@user.t</td>
+                    <td>@user.m</td>
+                    <td>@user.d</td>
+                    <td>@user.e</td>
+                    <td>@user.b</td>
+                    <td>
+                        <button @onclick="(() => ShowComponent = true)" class="btn btn-dark table-btn quick-add-btn">
+                            Request Change
+                        </button>
+                        @if (ShowComponent)
+                        {
+                            <EditDialog directory="@user" CloseEventCallback="(() => ShowComponent = false)"></EditDialog>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                No One Found
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@code
+{
+    @using CSUBWorkFlowProject.Web.Pages.Directory;
+
+    private bool loading;
+    private string searchtype;
+    private string searchvalue;
+    bool ShowComponent { get; set; } = false;
+
+
+    private List<CSUBWorkFlowProject.Shared.Models.Directory>
+    users;
+
+    protected override async Task OnInitializedAsync()
+    {
+        users = null;
+    }
+
+    private async Task SearchDirectory()
+    {
+        loading = true;
+
+        users = (await SearchService.Get(searchtype, searchvalue)).ToList();
+        loading = false;
+    }
+
+}

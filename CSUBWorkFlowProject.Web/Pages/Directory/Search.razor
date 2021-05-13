@@ -1,0 +1,106 @@
+﻿@page "/directory/search"
+
+@attribute [Authorize]
+
+@inject IAccountService AccountService
+@inject ISearchService SearchService
+@inject IAlertService AlertService
+@inject IRequestService RequestService
+
+<h1 class="page-title">Search Directory</h1>
+@if (AccountService.user.isManager)
+{
+    <TelerikGrid Data=@GridData EditMode="@GridEditMode.Inline"
+                 Height="500px" Pageable="true" PageSize=@PageSize
+                 OnUpdate=@UpdateItem
+                 FilterMode="@GridFilterMode.FilterRow"
+                 OnRead=@ReadItems>
+        <GridColumns>
+            <GridColumn Field=@nameof(Directory.f) Editable="false" Title="First Name" />
+            <GridColumn Field=@nameof(Directory.l) Editable="false" Title="Last Name" />
+            <GridColumn Field=@nameof(Directory.m) Editable="false" Title="Email" />
+            <GridColumn Field=@nameof(Directory.e) Editable="false" Title="Phone" />
+            <GridColumn Field=@nameof(Directory.t) Editable="true" Title="Title" />
+            <GridColumn Field=@nameof(Directory.b) Editable="false" Title="Building" />
+            <GridColumn Field=@nameof(Directory.d) Editable="false" Title="Department" />
+        </GridColumns>
+    </TelerikGrid>
+}
+else
+{
+    <TelerikGrid Data=@GridData EditMode="@GridEditMode.Inline"
+                 Height="500px" Pageable="true" PageSize=@PageSize
+                 OnUpdate=@UpdateItem
+                 FilterMode="@GridFilterMode.FilterRow"
+                 OnRead=@ReadItems>
+        <GridColumns>
+            <GridColumn Field=@nameof(Directory.f) Editable="false" Title="First Name" />
+            <GridColumn Field=@nameof(Directory.l) Editable="false" Title="Last Name" />
+            <GridColumn Field=@nameof(Directory.m) Editable="false" Title="Email" />
+            <GridColumn Field=@nameof(Directory.e) Editable="false" Title="Phone" />
+            <GridColumn Field=@nameof(Directory.t) Editable="true" Title="Title" />
+            <GridColumn Field=@nameof(Directory.b) Editable="false" Title="Building" />
+            <GridColumn Field=@nameof(Directory.d) Editable="false" Title="Department" />
+            <GridCommandColumn>
+                <GridCommandButton Command="Edit" Icon="edit">Edit</GridCommandButton>
+                <GridCommandButton Command="Save" Icon="save" ShowInEdit="true">Request</GridCommandButton>
+                <GridCommandButton Command="Cancel" Icon="cancel" ShowInEdit="true">Cancel</GridCommandButton>
+            </GridCommandColumn>
+        </GridColumns>
+    </TelerikGrid>
+}
+
+
+@code
+{
+    @using System.Collections.Generic;
+    @using Telerik.Blazor.Services;
+    @using Telerik.DataSource.Extensions;
+
+    private bool loading;
+    string Height = "400px";
+    public int Total { get; set; } = 0;
+
+    int PageSize = 15;
+
+    private List<CSUBWorkFlowProject.Shared.Models.Directory> users;
+
+    private List<CSUBWorkFlowProject.Shared.Models.Directory> GridData;
+
+    protected override async Task OnInitializedAsync()
+    {
+        users = (await SearchService.Get()).ToList();
+    }
+
+    protected void ReadItems(GridReadEventArgs args)
+    {
+        var datasourceResult = users.ToDataSourceResult(args.Request);
+
+        GridData = (datasourceResult.Data as IEnumerable<Directory>).ToList();
+        Total = datasourceResult.Total;
+
+        StateHasChanged();
+    }
+
+    private void UpdateItem(GridCommandEventArgs args)
+    {
+        var directory = args.Item as Directory;
+
+        try
+        {
+            loading = true;
+            AlertService.Clear();
+            RequestService.RequestChange(directory, AccountService.user.userid);
+            loading = false;
+            AlertService.Success("Reuqest Submitted");
+
+        }
+        catch (Exception ex)
+        {
+            AlertService.Error(ex.Message);
+            loading = false;
+            StateHasChanged();
+        }
+    }
+
+}
