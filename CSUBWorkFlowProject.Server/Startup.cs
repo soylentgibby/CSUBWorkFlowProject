@@ -32,11 +32,11 @@ namespace CSUBWorkFlowProject.Server
             services.AddTransient<LoginContext>();
             services.AddTransient<RequestContext>();
 
-            services.AddScoped<IDirectoryRepository, DirectoryRepository>();
-            services.AddScoped<ILoginRepository, LoginRepository>();
-            services.AddScoped<IRequestRepository, RequestRepository>();
+            services.AddTransient<IDirectoryRepository, DirectoryRepository>();
+            services.AddTransient<ILoginRepository, LoginRepository>();
+            services.AddTransient<IRequestRepository, RequestRepository>();
 
-            services.AddScoped<IRequestService, RequestService>();
+            services.AddTransient<IRequestService, RequestService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
