@@ -6,6 +6,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CSUBWorkFlowProject.Data\CSUBWorkFlowProject.Data.csproj" />
+    <ProjectReference Include="..\CSUBWorkFlowProject.Shared\CSUBWorkFlowProject.Shared.csproj">
+      <Private>true</Private>
+    </ProjectReference>
   </ItemGroup>
 
 

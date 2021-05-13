@@ -12,6 +12,6 @@
     <PackageReference Include="Telerik.UI.for.Blazor" Version="2.24.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CSUBWorkFlowProject.Models\CSUBWorkFlowProject.Shared.csproj" />
+    <ProjectReference Include="..\CSUBWorkFlowProject.Shared\CSUBWorkFlowProject.Shared.csproj" />
   </ItemGroup>
 </Project>
