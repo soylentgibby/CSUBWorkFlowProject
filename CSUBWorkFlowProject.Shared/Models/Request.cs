@@ -10,7 +10,8 @@ namespace CSUBWorkFlowProject.Shared.Models
         public string RequestField { get; set; }
         public string RequestChange { get; set; }
         public DateTime RequestDate { get; set; }
-        public string RequestBlob { get; set; }
+        public string OldRequestBlob { get; set; }
+        public string NewRequestBlob { get; set; }
         public int UserId { get; set; }
         public bool isApproved { get; set; }
         public bool isDenied { get; set; }

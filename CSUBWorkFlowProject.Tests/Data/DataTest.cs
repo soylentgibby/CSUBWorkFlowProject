@@ -99,11 +99,15 @@ namespace CSUBWorkFlowProject.Tests.Data
 
             string blob = JsonConvert.SerializeObject(directoryitem[0]);
 
+            directoryitem[0].t = "Teacher Associate";
+            string newblob = JsonConvert.SerializeObject(directoryitem[0]);
+
             var newRequest = new Request {
                 RequestField = "t",
                 RequestDate = DateTime.Now,
                 UserId = 1,
-                RequestBlob = blob,
+                OldRequestBlob = blob,
+                NewRequestBlob = newblob,
                 RequestChange = "Teacher Associate",
                 isDenied = false,
                 isApproved = false
@@ -127,7 +131,7 @@ namespace CSUBWorkFlowProject.Tests.Data
             IDirectoryRepository _directoryRepository = new DirectoryRepository(directoryContext);
 
             var request = _requestRepository.GetRequestbyRequestId(2);
-            var requestBlob = JsonConvert.DeserializeObject<Directory>(request.RequestBlob);
+            var requestBlob = JsonConvert.DeserializeObject<Directory>(request.OldRequestBlob);
 
             var oldItem = _directoryRepository.FindDirectoryItemByBlob(requestBlob);
 
@@ -175,7 +179,7 @@ namespace CSUBWorkFlowProject.Tests.Data
             IDirectoryRepository _directoryRepository = new DirectoryRepository(directoryContext);
 
             var request = _requestRepository.GetRequestbyRequestId(2);
-            var requestBlob = JsonConvert.DeserializeObject<Directory>(request.RequestBlob);
+            var requestBlob = JsonConvert.DeserializeObject<Directory>(request.OldRequestBlob);
 
             var oldItem = _directoryRepository.FindDirectoryItemByBlob(requestBlob);
 

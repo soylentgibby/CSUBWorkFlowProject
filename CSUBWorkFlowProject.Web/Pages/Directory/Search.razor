@@ -42,7 +42,7 @@ else
             <GridColumn Field=@nameof(Directory.b) Editable="false" Title="Building" />
             <GridColumn Field=@nameof(Directory.d) Editable="false" Title="Department" />
             <GridCommandColumn>
-                <GridCommandButton Command="Edit" Icon="edit">Edit</GridCommandButton>
+                <GridCommandButton Command="Edit" OnClick="GetDirectory" Icon="edit">Edit</GridCommandButton>
                 <GridCommandButton Command="Save" Icon="save" ShowInEdit="true">Request</GridCommandButton>
                 <GridCommandButton Command="Cancel" Icon="cancel" ShowInEdit="true">Cancel</GridCommandButton>
             </GridCommandColumn>
@@ -67,6 +67,8 @@ else
 
     private List<CSUBWorkFlowProject.Shared.Models.Directory> GridData;
 
+    private Directory SavedDirectory;
+
     protected override async Task OnInitializedAsync()
     {
         users = (await SearchService.Get()).ToList();
@@ -82,15 +84,20 @@ else
         StateHasChanged();
     }
 
+    private void GetDirectory(GridCommandEventArgs args)
+    {
+        SavedDirectory = args.Item as Directory;
+    }
+
     private void UpdateItem(GridCommandEventArgs args)
     {
-        var directory = args.Item as Directory;
+        var newdirectory = args.Item as Directory;
 
         try
         {
             loading = true;
             AlertService.Clear();
-            RequestService.RequestChange(directory, AccountService.user.userid);
+            RequestService.RequestChange(SavedDirectory, newdirectory, AccountService.user.userid);
             loading = false;
             AlertService.Success("Reuqest Submitted");
 

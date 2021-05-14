@@ -13,12 +13,13 @@
 @if (AccountService.user.isManager)
 {
     <TelerikGrid Data=@GridData
-                 Height="500px" Sortable="true" Pageable="true" PageSize=@PageSize>
+                 Height="500px" Sortable="true"  Resizable="true"  Pageable="true" PageSize=@PageSize>
         <GridColumns>
             <GridColumn Field=@nameof(Request.UserId) Editable="false" Title="Requester" />
             <GridColumn Field=@nameof(Request.RequestField) Editable="false" Title="Field" />
             <GridColumn Field=@nameof(Request.RequestChange) Editable="false" Title="Change" />
-            <GridColumn Field=@nameof(Request.RequestBlob) Editable="false" Title="Blob" />
+            <GridColumn Field=@nameof(Request.OldRequestBlob) Editable="false" Title="Old Blob" />
+            <GridColumn Field=@nameof(Request.NewRequestBlob) Editable="false" Title="New Blob" />
             <GridColumn Field=@nameof(Request.RequestDate) Editable="false" Title="Date" />
             <GridCommandColumn>
                 <GridCommandButton Command="Approve" Icon="save" OnClick="ApproveHandler">Approve</GridCommandButton>
@@ -30,7 +31,7 @@
 else
 {
     <TelerikGrid Data=@GridData
-                 Height="500px" Sortable ="true" Pageable="true" PageSize=@PageSize>
+                 Height="500px" Sortable ="true" Resizable="true" Pageable="true" PageSize=@PageSize>
         <GridColumns>
             <GridColumn Field=@nameof(Request.UserId) Editable="false" Title="Requester" />
             <GridColumn Field=@nameof(Request.RequestField) Editable="false" Title="Field" />
@@ -93,6 +94,9 @@ else
         catch (Exception ex)
         {
             AlertService.Error(ex.Message);
+        }
+        finally
+        {
             StateHasChanged();
         }
     }
@@ -112,6 +116,9 @@ else
         catch (Exception ex)
         {
             AlertService.Error(ex.Message);
+        }
+        finally
+        {
             StateHasChanged();
         }
     }

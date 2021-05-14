@@ -20,7 +20,7 @@ namespace CSUBWorkFlowProject.Web
 builder.Services.AddTelerikBlazor();
 
             builder.Services.AddScoped<IAccountService, AccountService>();
-            builder.Services.AddScoped<IRequestService, RequestService>();
+            builder.Services.AddTransient<IRequestService, RequestService>();
             builder.Services.AddScoped<ISearchService, SearchService>();
 
             builder.Services.AddScoped<IAlertService, AlertService>()
