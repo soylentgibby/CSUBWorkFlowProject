@@ -34,7 +34,7 @@ namespace CSUBWorkFlowProject.Data.Repositories
 
         public Directory FindDirectoryItemByBlob(Directory value)
         {
-            return _directoryContext.Directories.Where(x => x.b == value.b && x.d == value.d && x.e == value.e && x.f == value.f && x.l == value.l && x.m == value.m && x.o == value.o && x.r == value.r && x.u == value.u).First();
+            return _directoryContext.Directories.Where(x => x.b == value.b && x.d == value.d && x.e == value.e && x.f == value.f && x.l == value.l && x.m == value.m && x.o == value.o && x.r == value.r && x.u == value.u && x.t == value.t).First();
         }
 
         public List<Directory> SearchDirectoryByFirstName(string value)

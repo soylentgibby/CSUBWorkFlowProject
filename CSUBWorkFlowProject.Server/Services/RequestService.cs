@@ -50,7 +50,7 @@ namespace CSUBWorkFlowProject.Server.Services
         public void ApproveUserRequest(int requestId, int managerid)
         {
             var request = _requestRepository.GetRequestbyRequestId(requestId);
-            var requestBlob= JsonConvert.DeserializeObject<Directory>(request.RequestBlob);
+            var requestBlob= JsonConvert.DeserializeObject<Directory>(request.OldRequestBlob);
 
             var oldItem = _directoryRepository.FindDirectoryItemByBlob(requestBlob);
 

@@ -14,7 +14,7 @@ namespace CSUBWorkFlowProject.Web.Services
         Task DenyRequest(Request request, int managerid);
         Task<List<Request>> GetPendingRequests();
         Task<List<Request>> GetUserRequests(int userid);
-        Task RequestChange(Directory directory, int userid);
+        Task RequestChange(Directory olddirectory, Directory newdirectory, int userid);
     }
 
     public class RequestService : IRequestService
@@ -29,7 +29,7 @@ namespace CSUBWorkFlowProject.Web.Services
         }
 
 
-        public async Task RequestChange(Directory directory, int userid)
+        public async Task RequestChange(Directory olddirectory, Directory newdirectory, int userid)
         {
 
             var newRequest = new Request
@@ -38,8 +38,9 @@ namespace CSUBWorkFlowProject.Web.Services
                 RequestField = "t",
                 RequestDate = DateTime.Now,
                 UserId = userid,
-                RequestBlob = JsonConvert.SerializeObject(directory),
-                RequestChange = directory.t,
+                OldRequestBlob = JsonConvert.SerializeObject(olddirectory),
+                NewRequestBlob = JsonConvert.SerializeObject(newdirectory),
+                RequestChange = newdirectory.t,
                 isDenied = false,
                 isApproved = false
             };
